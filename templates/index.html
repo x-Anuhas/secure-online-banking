@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+{% block title %}FinBest | Secure Customer Portal{% endblock %}
+{% block main_class %}landing-main{% endblock %}
+{% block content %}
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-copy reveal">
+        <span class="eyebrow hero-eyebrow">FinBest · Secure customer portal</span>
+        <h1>Enjoy banking.<br><span>Feel secure at every step.</span></h1>
+        <p class="hero-lead">
+          Explore your account, review a transfer, and see how layered security
+          controls work together using illustrative account information. FinBest is not a bank
+          and does not move real money.
+        </p>
+        <div class="hero-actions">
+          <a class="button hero-primary" href="{{ url_for('register_page') }}">
+            Open an account <span aria-hidden="true">↗</span>
+          </a>
+          <a class="button button-outline" href="#process">How it works <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="hero-assurances">
+          <span><i>✓</i> Passwords are never stored in plain text</span>
+          <span><i>✓</i> Transfers commit atomically</span>
+          <span><i>✓</i> Step-up verification for unusual activity</span>
+        </div>
+      </div>
+      <div class="hero-visual reveal" aria-label="Illustration of an example FinBest account and card">
+        <div class="demo-card-scene" aria-hidden="true">
+          <span class="demo-card-ring"></span>
+          <span class="demo-card-orbit"></span>
+          <span class="demo-card-orbit-dot"></span>
+          <span class="demo-card-spark demo-card-spark-left"></span>
+          <span class="demo-card-spark demo-card-spark-right"></span>
+          <span class="demo-card-wave"></span>
+          <div class="demo-payment-card">
+            <span class="demo-card-brand">Fin<b>Best</b></span>
+            <span class="demo-card-label">ILLUSTRATIVE DEBIT CARD</span>
+            <div class="demo-card-balance">
+              <span>AVAILABLE BALANCE</span>
+              <strong>$4,820<span>.50</span></strong>
+            </div>
+            <div class="demo-card-account">
+              <span><small>ACCOUNT HOLDER</small><b>SAMPLE CUSTOMER</b></span>
+              <span><small>ACCOUNT</small><b>•••• 2048</b></span>
+            </div>
+            <div class="demo-card-actions">
+              <span><b>↗</b> Send</span>
+              <span><b>↙</b> Receive</span>
+              <span><b>•••</b> More</span>
+              <small>ILLUSTRATIVE</small>
+            </div>
+            <span class="demo-card-glare" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div class="float-chip float-transfer">
+          <span class="float-icon">↗</span>
+          <span><small>Transfer review</small><b>✓ Ready to review</b></span>
+        </div>
+        <div class="float-chip float-risk">
+          <span class="risk-pulse"></span>
+          <span><small>Risk monitoring</small><b>Active now</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-bottom-glow"></div>
+  </section>
+
+  <section class="trust-strip" aria-label="Security controls available in FinBest">
+    <div class="trust-caption">Built around security <span>Controls active in this application</span></div>
+    <div class="trust-item">
+      <strong class="count-up" data-count="3">0</strong>
+      <span>Failed sign-ins before lockout</span>
+      <small>Admin unlock restores access</small>
+    </div>
+    <div class="trust-item">
+      <strong class="count-up" data-count="2">0</strong>
+      <span>Ledger entries per transfer</span>
+      <small>Debit and credit stored together</small>
+    </div>
+    <div class="trust-item">
+      <strong class="count-up" data-count="5">0</strong>
+      <span>Minute login-risk window</span>
+      <small>Recent login velocity is evaluated</small>
+    </div>
+  </section>
+
+  <section class="content-section services-section" id="services">
+    <div class="section-inner">
+      <div class="section-heading reveal">
+        <span class="eyebrow">What you can explore</span>
+        <h2>Useful tools.<br><span>Security built into every step.</span></h2>
+        <p>Explore account access, illustrative transfers, transaction records, and the security controls behind them.</p>
+      </div>
+      <div class="services-grid">
+        <article class="service-card reveal spotlight-card">
+          <div class="service-card-top">
+            <span class="service-icon" aria-hidden="true">◈</span>
+            <span class="service-kicker">Account protection</span>
+          </div>
+          <h3>Sign in with confidence</h3>
+          <p>Use a protected login and set your Payment Password once to authorize transfers.</p>
+          <a href="{{ url_for('register_page') }}">Open an account <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="service-card reveal spotlight-card">
+          <div class="service-card-top">
+            <span class="service-icon" aria-hidden="true">⇄</span>
+            <span class="service-kicker">Careful transfers</span>
+          </div>
+          <h3>Review every transfer</h3>
+          <p>Confirm the recipient and amount. Both sides of each transfer are recorded atomically.</p>
+          <a href="{{ url_for('login_page') }}">Explore transfers <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="service-card reveal spotlight-card">
+          <div class="service-card-top">
+            <span class="service-icon" aria-hidden="true">⌁</span>
+            <span class="service-kicker">Adaptive security</span>
+          </div>
+          <h3>See how access is protected</h3>
+          <p>Review MFA, login risk signals, access-path analysis, and account security activity.</p>
+          <a href="{{ url_for('risk_monitor') if current_username else url_for('login_page') }}">Explore security <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="service-card reveal spotlight-card">
+          <div class="service-card-top">
+            <span class="service-icon" aria-hidden="true">▤</span>
+            <span class="service-kicker">Account activity</span>
+          </div>
+          <h3>Follow the account ledger</h3>
+          <p>Review sent and received transfers, ledger entries, and downloadable monthly statements.</p>
+          <a href="{{ url_for('transaction_history') if current_username else url_for('login_page') }}">View account activity <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section process-section" id="process">
+    <div class="section-inner">
+      <div class="section-heading reveal">
+        <span class="eyebrow">A clearer way to bank</span>
+        <h2>Manage your account<br><span>through secure workflows.</span></h2>
+        <p>Follow the customer journey from creating an account through reviewing protected account activity.</p>
+      </div>
+      <article class="process-feature reveal">
+        <div class="process-feature-copy">
+          <span class="process-feature-label"><i aria-hidden="true"></i> Account workflow</span>
+          <h3>Everything works together, step by step.</h3>
+          <p>Sign in, authorize transfers, and review security activity in one connected account experience. Balances and activity are illustrative; no real funds move.</p>
+          <span class="process-feature-note"><span aria-hidden="true">✓</span> No real deposits or payment network</span>
+        </div>
+        <div class="process-feature-photo">
+          <img src="{{ url_for('static', filename='images/finbest-everyday-mobile.jpg') }}"
+               alt="Example mobile device representing a digital account experience">
+          <span class="process-photo-caption">A connected account experience</span>
+        </div>
+      </article>
+      <div class="steps-grid">
+        <article class="step-card reveal">
+          <span class="step-number">01</span><span class="step-icon">＋</span>
+          <h3>Create your account</h3>
+          <p>Create an account using non-sensitive information and choose a strong password.</p>
+        </article>
+        <article class="step-card reveal">
+          <span class="step-number">02</span><span class="step-icon">◇</span>
+          <h3>Sign in securely</h3>
+          <p>Use your login password for sign-in; your Payment Password is set once and authorizes transfers.</p>
+        </article>
+        <article class="step-card reveal">
+          <span class="step-number">03</span><span class="step-icon">↗</span>
+          <h3>Send a transfer</h3>
+          <p>Choose another account and an amount. The application ledger updates atomically.</p>
+        </article>
+        <article class="step-card reveal">
+          <span class="step-number">04</span><span class="step-icon">⌁</span>
+          <h3>Keep an eye on security</h3>
+          <p>Explore the risk monitor, access graph, AVL tree visualizer, and account activity.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section transfer-showcase" id="transfer-preview">
+    <div class="section-inner">
+      <div class="transfer-showcase-copy">
+        <span class="eyebrow">Interactive transfer preview</span>
+        <h2>See how a ledger update works.</h2>
+        <p>Adjust the example amount to preview both account balances. This interaction is local to the page and does not initiate a payment.</p>
+        <a class="button hero-primary" href="{{ url_for('login_page') }}">Sign in to explore transfers <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="sandbox-card reveal spotlight-card"
+           data-transfer-sandbox data-sender-start="1800" data-recipient-start="425">
+        <div class="sandbox-heading">
+          <div>
+            <span class="sandbox-kicker">Illustrative accounts · no payment is made</span>
+            <h3>Preview a ledger update</h3>
+            <p>Change the amount to preview an update across two illustrative account balances.</p>
+          </div>
+          <span class="sandbox-status" data-sandbox-status role="status" aria-live="polite">
+            <i aria-hidden="true">✓</i><span data-sandbox-status-text>Preview ready</span>
+          </span>
+        </div>
+        <div class="sandbox-flow" aria-live="polite">
+          <div class="sandbox-balance">
+            <span>Example account</span>
+            <strong data-sandbox-sender>$1,550.00</strong>
+            <small>Example balance after update</small>
+          </div>
+          <span class="sandbox-arrow" aria-hidden="true">→</span>
+          <div class="sandbox-balance recipient-balance">
+            <span>Example recipient</span>
+            <strong data-sandbox-recipient>$675.00</strong>
+            <small>Example balance after update</small>
+          </div>
+        </div>
+        <div class="sandbox-controls">
+          <label for="sandbox-amount">Example transfer amount</label>
+          <div class="sandbox-input-wrap">
+            <span aria-hidden="true">$</span>
+            <input id="sandbox-amount" data-sandbox-amount type="number"
+                   min="100" max="500" step="50" value="250"
+                   inputmode="decimal" aria-describedby="sandbox-note">
+          </div>
+          <small id="sandbox-note">Demonstration only; no payment is made.</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing-cta" id="about">
+    <div class="section-inner reveal">
+      <span class="eyebrow hero-eyebrow">FinBest security center</span>
+      <h2>More visibility.<br><span>More control over your account.</span></h2>
+      <p>Explore the risk dashboard and transaction history, or create an account to try the complete account journey. Do not enter real financial or identity information.</p>
+      <div class="hero-actions">
+        <a class="button hero-primary" href="{{ url_for('risk_monitor') if current_username else url_for('login_page') }}">Explore security <span aria-hidden="true">↗</span></a>
+        <a class="button button-outline" href="{{ url_for('transaction_history') if current_username else url_for('login_page') }}">View account activity</a>
+        <a class="button button-outline" href="{{ url_for('register_page') }}">Open an account</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

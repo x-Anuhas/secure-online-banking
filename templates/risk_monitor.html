@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Security dashboard | FinBest{% endblock %}
+{% block main_class %}app-shell{% endblock %}
+{% block content %}
+  <div class="dashboard-inner security-dashboard" id="risk-data">
+    <header class="page-head reveal">
+      <div>
+        <span class="eyebrow">Behavioral risk engine</span>
+        <h1>Security dashboard</h1>
+        <p class="page-sub">A transparent view of the controls active in your account session.</p>
+      </div>
+      <a class="button button-secondary" href="{{ url_for('dashboard') }}">
+        <span aria-hidden="true">←</span> Back to dashboard
+      </a>
+    </header>
+
+    <div id="risk-load-message" class="form-message" aria-live="polite"></div>
+
+    <section class="security-metrics reveal" aria-label="Security control summary">
+      <article class="security-metric">
+        <span class="security-metric-icon metric-green">✓</span>
+        <div><strong id="controls-on">—</strong><span>Active protections</span></div>
+      </article>
+      <article class="security-metric">
+        <span class="security-metric-icon metric-blue">⌁</span>
+        <div><strong>Decision Tree + KNN</strong><span>Illustrative risk models</span></div>
+      </article>
+      <article class="security-metric">
+        <span class="security-metric-icon metric-purple">⏱</span>
+        <div><strong>30 minutes</strong><span>Session expiration</span></div>
+      </article>
+      <article class="security-metric">
+        <span class="security-metric-icon metric-amber">◇</span>
+        <div><strong>Payment Password</strong><span>Required on every transfer</span></div>
+      </article>
+    </section>
+
+    <div class="security-content-grid">
+      <section class="card security-panel reveal">
+        <div class="card-heading">
+          <span class="card-icon shield-icon">◇</span>
+          <div><h2>Access-pattern analysis</h2><p>Directed event transitions from your own account activity.</p></div>
+        </div>
+        <div class="security-graph-frame">
+          <svg id="access-graph" class="graph-canvas" viewBox="0 0 600 220"
+               role="img" aria-label="Directed graph of access event categories"></svg>
+        </div>
+        <div id="graph-warning" class="form-message" aria-live="polite"></div>
+        <div class="traversal-grid">
+          <div class="traversal-card">
+            <span class="traversal-label"><i></i> Breadth-first traversal</span>
+            <p id="bfs-order">Loading activity…</p>
+          </div>
+          <div class="traversal-card">
+            <span class="traversal-label"><i></i> Depth-first traversal</span>
+            <p id="dfs-order">Loading activity…</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card security-panel reveal">
+        <div class="card-heading">
+          <span class="card-icon tree-icon">⌘</span>
+          <div><h2>Account index health</h2><p>An anonymized view of the AVL balance index.</p></div>
+        </div>
+        <div class="avl-metrics">
+          <div><span>Indexed accounts</span><strong id="avl-count">—</strong></div>
+          <div><span>Tree height</span><strong id="avl-height">—</strong></div>
+        </div>
+        <div class="security-graph-frame avl-frame">
+          <svg id="avl-graph" class="graph-canvas" viewBox="0 0 800 220"
+               role="img" aria-label="Anonymized AVL account index tree"></svg>
+        </div>
+        <p class="index-caption">
+          The tree visualization uses generic labels only. Account identifiers and balances
+          are not included.
+        </p>
+      </section>
+    </div>
+
+    <section class="card controls-panel reveal">
+      <div class="card-heading">
+        <span class="card-icon">✓</span>
+        <div><h2>Active security controls</h2><p>Safeguards currently enforced by this application.</p></div>
+      </div>
+      <div class="controls-grid" id="risk-controls"></div>
+    </section>
+
+    <aside class="security-disclaimer">
+      <span aria-hidden="true">ⓘ</span>
+      <p><strong>Important:</strong> the classifier is not validated for fraud detection.
+        Risk signals are not proof of identity or wrongdoing. FinBest is not a financial
+        institution; balances are illustrative and no real funds move.</p>
+    </aside>
+  </div>
+{% endblock %}

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <meta name="description" content="FinBest account access, payments, and security information.">
+    <title>{% block title %}FinBest | Secure Customer Portal{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v='cyber-theme-22') }}">
+    {% if request.endpoint != 'index' %}
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/app-theme.css', v='finbest-interface-9') }}">
+    {% endif %}
+    {% if request.endpoint == 'index' %}
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css', v='reference-layout-17') }}">
+    {% endif %}
+    <script src="{{ url_for('static', filename='js/main.js', v='cyber-theme-11') }}" defer></script>
+  </head>
+  <body class="{% if request.endpoint == 'index' %}landing-page{% endif %}">
+    <header class="site-header{% if request.endpoint == 'index' %} site-header-landing{% endif %}" id="site-header">
+      <div class="nav-wrap">
+        <a class="brand" href="{{ url_for('index') }}" aria-label="FinBest home">
+          <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <rect width="40" height="40" rx="12" fill="#12324b"/>
+            <path d="M20 5.5 32 11v8.6c0 7.2-5 12.2-12 15-7-2.8-12-7.8-12-15V11l12-5.5Z"
+                  stroke="#00c2ff" stroke-width="2"/>
+            <path d="m15 20 3.2 3.2 6.8-7" stroke="white" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Fin<b>Best</b></span>
+        </a>
+        <nav class="nav-links" id="main-nav" aria-label="Main navigation">
+          <a href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}class="active"{% endif %}>Home</a>
+          <a href="{{ url_for('dashboard') if current_username else url_for('login_page') }}"
+             {% if request.endpoint == 'dashboard' %}class="active"{% endif %}>Accounts</a>
+          <a href="{{ (url_for('dashboard') if current_username else url_for('login_page')) ~ '#transfer-panel' }}">
+            Transfers &amp; Payments
+          </a>
+          <a href="{{ url_for('transaction_history') if current_username else url_for('login_page') }}"
+             {% if request.endpoint == 'transaction_history' %}class="active"{% endif %}>Activity</a>
+          <a href="{{ url_for('risk_monitor') if current_username else url_for('login_page') }}"
+             {% if request.endpoint == 'risk_monitor' %}class="active"{% endif %}>Security Center</a>
+          <a href="{{ url_for('index') }}#services">Features</a>
+          <a href="{{ url_for('index') }}#about">Support</a>
+          {% if current_is_admin %}
+            <a href="{{ url_for('admin_dashboard') }}"
+               {% if request.endpoint == 'admin_dashboard' %}class="active"{% endif %}>Admin dashboard</a>
+          {% endif %}
+        </nav>
+        <div class="header-right">
+          <button class="theme-toggle" type="button" data-theme-toggle
+                  aria-label="Switch to light mode" aria-pressed="true">
+            <span data-theme-icon aria-hidden="true">☀</span><span class="theme-toggle-label">Theme</span>
+          </button>
+          {% if current_username %}
+            <a class="user-chip" href="{{ url_for('profile_page') }}"
+               aria-label="Open profile settings for {{ current_short_name }}">
+              {% if current_profile_image_url %}
+                <img class="user-avatar" src="{{ current_profile_image_url }}" alt="">
+              {% else %}
+                <span class="user-avatar" aria-hidden="true">{{ current_short_name[:1]|upper }}</span>
+              {% endif %}
+              <span class="uc-name">{{ current_short_name }}</span>
+            </a>
+            <button class="button header-button" id="logout-button" type="button">Sign out</button>
+          {% else %}
+            <a class="button button-secondary header-button" href="{{ url_for('login_page') }}">Sign in</a>
+            <a class="button header-button" href="{{ url_for('register_page') }}">
+              {% if request.endpoint == 'index' %}Open account{% else %}Get started{% endif %}
+            </a>
+          {% endif %}
+          <button class="menu-toggle" id="menu-toggle" type="button"
+                  aria-label="Open navigation menu" aria-expanded="false"
+                  aria-controls="main-nav">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main class="{% block main_class %}container{% endblock %}">
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer{% if request.endpoint == 'index' %} landing-footer{% endif %}">
+      <div class="footer-wrap">
+        <div class="footer-brand-column">
+          <a class="footer-brand" href="{{ url_for('index') }}">Fin<span>Best</span></a>
+          <p>Account access and payment workflows.</p>
+        </div>
+        <div class="footer-links">
+          <strong>Explore</strong>
+          <a href="{{ url_for('index') }}#services">Services</a>
+          <a href="{{ url_for('index') }}#process">How it works</a>
+          <a href="{{ url_for('index') }}#about">About FinBest</a>
+        </div>
+        <div class="footer-links">
+          <strong>Your account</strong>
+          <a href="{{ url_for('login_page') }}">Sign in</a>
+          <a href="{{ url_for('register_page') }}">Open an account</a>
+          {% if current_username %}
+            <a href="{{ url_for('transaction_history') }}">Transaction history</a>
+            <a href="{{ url_for('risk_monitor') }}">Security center</a>
+            {% if current_is_admin %}
+              <a href="{{ url_for('admin_dashboard') }}">Admin dashboard</a>
+            {% endif %}
+          {% endif %}
+        </div>
+        <div class="footer-links">
+          <strong>Legal &amp; security</strong>
+          <a href="{{ url_for('privacy_policy') }}">Privacy Policy</a>
+          <a href="{{ url_for('terms_of_service') }}">Terms of Service</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© FinBest. All rights reserved.</span>
+        <span class="footer-status">Account security controls · FinBest service information</span>
+      </div>
+    </footer>
+    {% if not current_username %}
+      <div id="global-message" class="sr-only" aria-live="polite"></div>
+    {% endif %}
+  </body>
+</html>

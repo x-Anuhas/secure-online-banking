@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% if legal_page == "privacy" %}
+  {% set page_heading = "Privacy Policy" %}
+  {% set page_title = "Privacy Policy | FinBest" %}
+{% else %}
+  {% set page_heading = "Terms of Service" %}
+  {% set page_title = "Terms of Service | FinBest" %}
+{% endif %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block content %}
+  <section class="card legal-page">
+    <div class="page-head">
+      <span class="eyebrow">FinBest information</span>
+      <h1>{{ page_heading }}</h1>
+      <p class="page-sub">Important information about using this application.</p>
+    </div>
+
+    {% if legal_page == "privacy" %}
+      <h2>Information you provide</h2>
+      <p>
+        Information entered into account, profile, and security forms is processed by this
+        application and may be stored in its configured database. Do not enter real
+        financial credentials, government identifiers, or other sensitive personal data.
+      </p>
+      <h2>Use and retention</h2>
+      <p>
+        Information is used to provide the account, security, and transfer workflows
+        available in this application. Data retention and deletion depend on the local
+        installation and its database configuration.
+      </p>
+      <h2>Financial services</h2>
+      <p>
+        FinBest is not a bank, is not FDIC-insured, and does not accept deposits or move
+        money through a payment network.
+      </p>
+    {% else %}
+      <h2>Application purpose</h2>
+      <p>
+        FinBest is an educational software application for exploring account access,
+        security, and ledger workflows. It is not a financial institution and does not
+        provide banking, investment, or payment services.
+      </p>
+      <h2>No real financial transactions</h2>
+      <p>
+        Account balances, transfers, statements, and receipts in this application are
+        application records only. They do not represent deposits, payment instructions,
+        or confirmation of a transaction through a financial institution.
+      </p>
+      <h2>Not insured</h2>
+      <p>
+        Accounts and balances in FinBest are not deposits and are not insured by the
+        Federal Deposit Insurance Corporation or any other deposit insurer.
+      </p>
+      <h2>Connection security</h2>
+      <p>
+        Network encryption depends on how the application is deployed. Do not use this
+        application to submit real financial or identity information.
+      </p>
+    {% endif %}
+  </section>
+{% endblock %}

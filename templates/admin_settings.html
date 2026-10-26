@@ -1,0 +1,320 @@
+{% extends "base.html" %}
+{% block title %}Admin dashboard | FinBest{% endblock %}
+{% block main_class %}app-shell{% endblock %}
+{% block content %}
+  <div class="dashboard-inner admin-dashboard">
+    <header class="page-head reveal">
+      <div>
+        <span class="eyebrow">FinBest · Administrator</span>
+        <h1>Admin dashboard</h1>
+        <p class="page-sub">Review account access, risk events, and transfer activity.</p>
+      </div>
+      <span class="membership-badge">Administrator · {{ user.username }}</span>
+    </header>
+
+    <section class="card profile-panel reveal admin-panel">
+      <div class="card-heading">
+        <span class="card-icon">⛨</span>
+        <div><h2>Audit-chain integrity</h2><p>Application-signed, append-only records for sensitive actions.</p></div>
+      </div>
+      <p id="audit-chain-status"
+         data-audit-valid="{{ 'true' if audit_integrity.valid else 'false' }}">
+        {{ "Verified" if audit_integrity.valid else "Integrity failure" }} ·
+        {{ audit_integrity.entries_checked }} entries checked
+        {% if not audit_integrity.valid %}· First invalid entry: {{ audit_integrity.first_invalid_id }}{% endif %}
+      </p>
+      <button class="button button-secondary" type="button" id="verify-audit-chain">
+        Verify chain again
+      </button>
+    </section>
+
+    <section class="card profile-panel reveal admin-panel">
+      <div class="card-heading">
+        <span class="card-icon">◇</span>
+        <div><h2>Transfer risk threshold</h2><p>Adjust when transfer amounts are flagged as unusual.</p></div>
+      </div>
+      <div id="admin-risk-message" class="form-message" aria-live="polite"></div>
+      <form id="admin-risk-form" class="profile-form">
+        <div class="field">
+          <label for="amount-ratio-limit">Flag transfers above this multiple</label>
+          <input id="amount-ratio-limit" name="amount_ratio_limit" type="number"
+                 min="1" max="100" step="1" value="{{ transfer_risk_ratio_limit }}" required>
+          <small>Whole number from 1 to 100. For example, 5 flags a transfer above 5× the typical amount.</small>
+        </div>
+        <button class="button" type="submit">Save risk threshold</button>
+      </form>
+      <p class="profile-security-note">
+        This setting changes the risk flag only. It does not change account balances,
+        available-funds checks, or the Payment Password requirement for transfers.
+      </p>
+    </section>
+
+    <section class="card profile-panel reveal admin-panel">
+      <div class="card-heading">
+        <span class="card-icon">⌑</span>
+        <div><h2>Locked accounts</h2><p>Unlock customers after confirming their request.</p></div>
+      </div>
+      <div id="admin-account-message" class="form-message" aria-live="polite"></div>
+      {% if locked_accounts %}
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Customer</th><th>Username</th><th>Account</th><th>Failed attempts</th><th>Locked at</th><th>Action</th></tr>
+            </thead>
+            <tbody id="locked-account-rows">
+              {% for account in locked_accounts %}
+                <tr data-locked-account="{{ account.id }}">
+                  <td>{{ account.full_name }}</td>
+                  <td>{{ account.username }}</td>
+                  <td>{{ account.account_number }}</td>
+                  <td>{{ account.failed_login_attempts }}</td>
+                  <td>{{ account.account_locked_at|datetime if account.account_locked_at else "—" }}</td>
+                  <td><button class="button button-secondary" type="button"
+                              data-unlock-account="{{ account.id }}">Unlock</button></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p id="locked-account-empty">There are no locked accounts.</p>
+      {% endif %}
+    </section>
+
+    <section class="card profile-panel reveal admin-panel">
+      <div class="card-heading">
+        <span class="card-icon">⊘</span>
+        <div><h2>Customer transfer controls</h2><p>Block or restore an account’s ability to send transfers.</p></div>
+      </div>
+      <div id="admin-transfer-access-message" class="form-message" aria-live="polite"></div>
+      {% if customers %}
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Customer</th><th>Username</th><th>Account</th><th>Login status</th><th>Transfer access</th><th>Action</th></tr>
+            </thead>
+            <tbody id="admin-customer-rows">
+              {% for customer in customers %}
+                <tr data-customer-account="{{ customer.id }}">
+                  <td>{{ customer.full_name }}</td>
+                  <td>{{ customer.username }}</td>
+                  <td>{{ customer.account_number }}</td>
+                  <td>{{ customer.account_status|title }}</td>
+                  <td data-transfer-state>{{ "Enabled" if customer.can_transfer else "Blocked" }}</td>
+                  <td>
+                    <button class="button button-secondary" type="button"
+                            data-toggle-transfer-access="{{ customer.id }}"
+                            data-can-transfer="{{ 'true' if customer.can_transfer else 'false' }}">
+                      {{ "Block transfers" if customer.can_transfer else "Enable transfers" }}
+                    </button>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p>No customer accounts are available.</p>
+      {% endif %}
+    </section>
+
+    <section class="card profile-panel reveal admin-panel">
+      <div class="card-heading">
+        <span class="card-icon">↗</span>
+        <div><h2>System transfer ledger</h2><p>Completed FinBest account records; no real payments are processed.</p></div>
+      </div>
+      {% if transfers %}
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Transfer</th><th>Date (UTC)</th><th>From</th><th>To</th><th>Amount</th><th>Reference</th></tr>
+            </thead>
+            <tbody>
+              {% for transfer in transfers %}
+                <tr>
+                  <td>FB-{{ "%010d"|format(transfer.id) }}</td>
+                  <td>{{ transfer.created_at|datetime }}</td>
+                  <td>{{ transfer.sender_username }} · {{ transfer.sender_account }}</td>
+                  <td>{{ transfer.recipient_username }} · {{ transfer.recipient_account }}</td>
+                  <td>${{ "%.2f"|format(transfer.amount_cents / 100) }}</td>
+                  <td>{{ transfer.reference or "—" }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p>No transfers have been recorded.</p>
+      {% endif %}
+    </section>
+
+    <section class="card profile-panel reveal admin-panel">
+      <div class="card-heading">
+        <span class="card-icon">⌁</span>
+        <div>
+          <h2>Recent login attempts</h2>
+          <p>Identifiers are keyed fingerprints; raw IP addresses and device IDs are not stored here.</p>
+        </div>
+      </div>
+      {% if login_attempts %}
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date (UTC)</th><th>Account</th><th>Outcome</th>
+                <th>Risk</th><th>IP fingerprint</th><th>Device fingerprint</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for attempt in login_attempts %}
+                <tr>
+                  <td>{{ attempt.occurred_at|datetime }}</td>
+                  <td>{{ attempt.username }}</td>
+                  <td>{{ attempt.outcome|replace("_", " ")|title }}</td>
+                  <td>
+                    {% if attempt.risk_level %}
+                      {{ attempt.risk_level }}{% if attempt.risk_score is not none %} · {{ "%.3f"|format(attempt.risk_score) }}{% endif %}
+                    {% else %}
+                      —
+                    {% endif %}
+                  </td>
+                  <td><code>{{ attempt.ip_fingerprint }}</code></td>
+                  <td><code>{{ attempt.device_fingerprint or "—" }}</code></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p>No login attempts have been recorded yet.</p>
+      {% endif %}
+    </section>
+
+    <section class="card profile-panel reveal admin-panel">
+      <div class="card-heading">
+        <span class="card-icon">⌁</span>
+        <div><h2>Login risk and transfer flags</h2><p>Recent model decisions, verification challenges, and abnormal transfer attempts.</p></div>
+      </div>
+      {% if risk_events %}
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Date (UTC)</th><th>Customer</th><th>Event</th><th>Score</th><th>Risk</th><th>Decision</th><th>Reasons and signals</th></tr>
+            </thead>
+            <tbody>
+              {% for event in risk_events %}
+                <tr>
+                  <td>{{ event.occurred_at|datetime }}</td>
+                  <td>{{ event.username }}</td>
+                  <td>{{ event.event_type|title }}</td>
+                  <td>{{ "%.3f"|format(event.risk_score) }}</td>
+                  <td>{{ event.risk_level }}</td>
+                  <td>{{ event.action|replace("_", " ")|title }}</td>
+                  <td>
+                    {{ event.reasons|join("; ") }}
+                    <details>
+                      <summary>Feature values</summary>
+                      <pre>{{ event.features|tojson(indent=2) }}</pre>
+                    </details>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p>No login risk or transfer events have been recorded.</p>
+      {% endif %}
+    </section>
+
+    <section class="card profile-panel reveal admin-panel">
+      <div class="card-heading">
+        <span class="card-icon">!</span>
+        <div><h2>Immutable security incidents</h2><p>High-risk actions blocked and linked to the application-signed audit chain.</p></div>
+      </div>
+      {% if incidents %}
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Date (UTC)</th><th>Customer</th><th>Event</th><th>Risk score</th><th>Audit entry HMAC</th></tr></thead>
+            <tbody>
+              {% for incident in incidents %}
+                <tr>
+                  <td>{{ incident.occurred_at|datetime }}</td>
+                  <td>{{ incident.username }}</td>
+                  <td>{{ incident.event_type|title }}</td>
+                  <td>{{ "%.3f"|format(incident.risk_score) }}</td>
+                  <td><code>{{ incident.audit_entry_hash }}</code></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p>No high-risk incidents have been recorded.</p>
+      {% endif %}
+    </section>
+
+    <section class="card profile-panel reveal admin-panel">
+      <div class="card-heading">
+        <span class="card-icon">⌘</span>
+        <div><h2>Access-path graph scans</h2><p>BFS/DFS traversal of each account’s recorded resource-access sequence.</p></div>
+      </div>
+      {% if access_scans %}
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Account</th><th>BFS order</th><th>DFS order</th><th>Suspicious paths</th></tr>
+            </thead>
+            <tbody>
+              {% for scan in access_scans %}
+                <tr>
+                  <td>{{ scan.username }}</td>
+                  <td>{{ scan.bfs|join(" → ") }}</td>
+                  <td>{{ scan.dfs|join(" → ") }}</td>
+                  <td>
+                    {% if scan.suspicious_paths %}
+                      {{ scan.suspicious_paths|map("join", " → ")|join("; ") }}
+                    {% else %}
+                      None detected
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p>No access paths have been recorded.</p>
+      {% endif %}
+    </section>
+
+    <section class="card profile-panel reveal admin-panel">
+      <div class="card-heading">
+        <span class="card-icon">◷</span>
+        <div><h2>Recent account activity</h2><p>Authentication, account lock, administrator, and transfer audit events.</p></div>
+      </div>
+      {% if activity_events %}
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Date (UTC)</th><th>Customer</th><th>Activity</th></tr></thead>
+            <tbody>
+              {% for event in activity_events %}
+                <tr>
+                  <td>{{ event.occurred_at|datetime }}</td>
+                  <td>{{ event.username }}</td>
+                  <td>{{ event.event_type }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p>No account activity has been recorded.</p>
+      {% endif %}
+    </section>
+    <aside class="demo-disclaimer">
+      <strong>Administrator view:</strong> Balances are illustrative. Transfer blocks stop
+      outgoing transfers from the selected account but do not freeze its login or incoming transfers.
+    </aside>
+  </div>
+{% endblock %}

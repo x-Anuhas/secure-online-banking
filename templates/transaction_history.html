@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Transaction history | FinBest{% endblock %}
+{% block main_class %}app-shell{% endblock %}
+{% block content %}
+  <div class="dashboard-inner">
+    <header class="page-head reveal">
+      <div>
+        <span class="eyebrow">Account activity</span>
+        <h1>Transaction history</h1>
+        <p class="page-sub">
+          Transfers associated with your account. FinBest records activity internally;
+          no real payments are made.
+        </p>
+      </div>
+      <a class="button button-secondary" href="{{ url_for('dashboard') }}">
+        <span aria-hidden="true">←</span> Back to account
+      </a>
+    </header>
+
+    <section class="card history-card reveal" aria-labelledby="history-title">
+      <div class="history-heading">
+        <div class="card-heading">
+          <span class="card-icon history-icon" aria-hidden="true">↗</span>
+          <div>
+            <h2 id="history-title">Ledger entries</h2>
+            <p>{{ total_entries }} recorded entr{{ "y" if total_entries == 1 else "ies" }}</p>
+          </div>
+        </div>
+        <form class="statement-download-form" method="get"
+              action="{{ url_for('monthly_statement') }}">
+          <label for="statement-month">Monthly statement</label>
+          <input id="statement-month" name="month" type="month"
+                 value="{{ statement_month }}" max="{{ statement_month }}" required>
+          <button class="button button-secondary" type="submit">Download PDF</button>
+        </form>
+      </div>
+
+      {% if entries %}
+        <div class="table-wrap">
+          <table class="transaction-table">
+            <thead>
+              <tr>
+                <th scope="col">Date / time (UTC)</th>
+                <th scope="col">Type</th>
+                <th scope="col">Counterparty</th>
+                <th scope="col">Reference</th>
+                <th scope="col">Status</th>
+                <th scope="col" class="align-right">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for entry in entries %}
+                <tr>
+                  <td class="date-cell">{{ entry.created_at|datetime }}</td>
+                  <td>
+                    <span class="type-badge {{ 'type-sent' if entry.direction == 'debit' else 'type-received' }}">
+                      {{ 'Sent' if entry.direction == 'debit' else 'Received' }}
+                    </span>
+                  </td>
+                  <td class="counterparty">{{ entry.counterparty }}</td>
+                  <td class="reference-cell">{{ entry.reference or "—" }}</td>
+                  <td><span class="status-complete"><i></i> Completed</span></td>
+                  <td class="align-right amount-{{ entry.direction }}">
+                    {{ "+" if entry.direction == "credit" else "−" }}${{ "%.2f"|format(entry.amount_cents / 100) }}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        {% if total_pages > 1 %}
+          <nav class="ledger-pagination" aria-label="Transaction history pages">
+            {% if page > 1 %}
+              <a class="button button-secondary"
+                 href="{{ url_for('transaction_history', page=page - 1) }}">Previous</a>
+            {% else %}
+              <span></span>
+            {% endif %}
+            <span aria-current="page">Page {{ page }} of {{ total_pages }}</span>
+            {% if page < total_pages %}
+              <a class="button button-secondary"
+                 href="{{ url_for('transaction_history', page=page + 1) }}">Next</a>
+            {% else %}
+              <span></span>
+            {% endif %}
+          </nav>
+        {% endif %}
+      {% else %}
+        <div class="empty-state">
+          <span class="empty-icon" aria-hidden="true">↗</span>
+          <strong>No ledger entries yet</strong>
+          <p>Completed transfers will appear here.</p>
+        </div>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}

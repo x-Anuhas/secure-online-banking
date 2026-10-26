@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Receipt verification | FinBest{% endblock %}
+{% block content %}
+  <section class="receipt-verify-card">
+    <span class="receipt-success-mark" aria-hidden="true">✓</span>
+    <span class="eyebrow">Receipt verification</span>
+    <h1>Transaction verified</h1>
+    <p>This reference matches a completed FinBest transaction record.</p>
+    <dl class="receipt-details">
+      <div><dt>Status</dt><dd>SUCCESSFUL</dd></div>
+      <div><dt>Transaction ID</dt><dd>{{ receipt.transaction_id }}</dd></div>
+      <div><dt>Amount</dt><dd>${{ receipt.amount }}</dd></div>
+      <div><dt>Date and time</dt><dd>{{ receipt.created_at|datetime }}</dd></div>
+    </dl>
+    <p class="receipt-disclaimer">This receipt validates activity within FinBest only. It is not proof of a payment through a financial institution.</p>
+  </section>
+{% endblock %}

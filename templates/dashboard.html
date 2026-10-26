@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | FinBest{% endblock %}
+{% block main_class %}app-shell{% endblock %}
+{% block content %}
+  <div class="dashboard-inner">
+    <header class="page-head account-page-head reveal">
+      <div>
+        <span class="eyebrow">FinBest account overview</span>
+        <h1>Welcome back, {{ user.full_name.split(' ')[0] }}</h1>
+        <p class="page-sub">Review your account details and recent activity.</p>
+      </div>
+      <div class="account-page-actions">
+        <span class="secure-session-badge" role="status">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M10 1.8 16 4v4.8c0 4-2.5 6.9-6 9.1-3.5-2.2-6-5.1-6-9.1V4l6-2.2Z"
+                  stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="m7.2 9.7 1.8 1.8 3.8-4" stroke="currentColor" stroke-width="1.6"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Secure session active
+        </span>
+        <a class="button button-secondary" href="{{ url_for('risk_monitor') }}">
+          <span aria-hidden="true">◇</span> Open security monitor
+        </a>
+      </div>
+    </header>
+    <div id="global-message" class="form-message" aria-live="polite"></div>
+    <section class="summary-grid reveal" aria-label="Account overview">
+      <article class="sum-card balance">
+        <span class="sum-k">Available balance</span>
+        <strong class="sum-v">${{ "%.2f"|format(user.balance_cents / 100) }}</strong>
+        <span class="sum-hint"><i></i> Illustrative balance · no real funds</span>
+        <span class="balance-watermark" aria-hidden="true">FB</span>
+      </article>
+      <article class="sum-card">
+        <span class="sum-k">Account number</span>
+        <strong class="sum-v account-number">{{ user.account_number }}</strong>
+        <button class="copy-button" id="copy-account" type="button" data-copy="{{ user.account_number }}">
+          <span aria-hidden="true">▣</span> Copy number
+        </button>
+      </article>
+      <article class="sum-card">
+        <span class="sum-k">Account status</span>
+        <strong class="status-label"><i></i> Active</strong>
+        <span class="sum-hint">Authenticated account session</span>
+      </article>
+      <article class="sum-card">
+        <span class="sum-k">Member since</span>
+        <strong class="sum-v member-since">{{ user.created_at|month_year }}</strong>
+        <span class="sum-hint">Welcome to FinBest</span>
+      </article>
+    </section>
+
+    <div class="dash-grid">
+      <section class="card transfer-card reveal" id="transfer-panel">
+        <div class="card-heading">
+          <span class="card-icon">↗</span>
+          <div><h2>Transfers</h2><p>Review the recipient and amount before submitting.</p></div>
+        </div>
+        <div id="transfer-message" class="form-message" aria-live="polite"></div>
+        <form id="transfer-form">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <div class="field">
+            <label for="recipient">Recipient username or account number <span>*</span></label>
+            <input id="recipient" name="recipient" maxlength="30"
+                   placeholder="e.g. alex or 1234567890" autocomplete="off" required>
+            <small>Transfers update FinBest records only; no real funds are sent or received.</small>
+          </div>
+          <div class="field">
+            <label for="amount">Amount <span>*</span></label>
+            <div class="input-wrap"><b>$</b><input id="amount" name="amount"
+              type="number" min="0.01" max="1000000" step="0.01"
+              placeholder="0.00" inputmode="decimal" required></div>
+          </div>
+          <div class="field">
+            <label for="reference">Reference note <small>(optional)</small></label>
+            <textarea id="reference" name="reference" maxlength="140"
+                      placeholder="What is this transfer for?"></textarea>
+          </div>
+          <button class="button full transfer-submit" type="submit">
+            Review transfer <span aria-hidden="true">→</span>
+          </button>
+          <p class="transfer-footnote"><span>◇</span> Every transfer requires your Payment Password.</p>
+        </form>
+      </section>
+
+      <section class="card pulse-card reveal">
+        <div class="card-heading">
+          <span class="card-icon shield-icon">◇</span>
+          <div><h2>Security pulse</h2><p>Your session protection at a glance.</p></div>
+        </div>
+        <div class="pulse-status">
+          <span class="pulse-ring"><i></i></span>
+          <div><strong>Protection active</strong><small>Monitoring account activity</small></div>
+          <span class="badge badge-ok">ACTIVE</span>
+        </div>
+        <div class="pulse-list">
+          <div><span>Database-backed session</span><b>On</b></div>
+          <div><span>Transfer risk checks</span><b>On</b></div>
+          <div><span>Session timeout</span><b>30 min</b></div>
+        </div>
+        <a class="pulse-link" href="{{ url_for('risk_monitor') }}">View risk monitor <span>→</span></a>
+      </section>
+    </div>
+
+    <section class="card history-card reveal">
+      <div class="history-heading">
+        <div class="card-heading">
+          <span class="card-icon history-icon">↗</span>
+          <div><h2>Recent activity</h2><p>Recent ledger entries for this account.</p></div>
+        </div>
+        <div class="history-tools">
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="transaction-search" type="search" placeholder="Search activity"
+                   aria-label="Search transactions">
+          </label>
+          <select id="transaction-filter" aria-label="Filter transaction type">
+            <option value="all">All activity</option>
+            <option value="debit">Sent</option>
+            <option value="credit">Received</option>
+          </select>
+        </div>
+      </div>
+      <form class="statement-download-form" method="get" action="{{ url_for('monthly_statement') }}">
+        <label for="statement-month">Monthly statement</label>
+        <input id="statement-month" name="month" type="month"
+               value="{{ statement_month }}" max="{{ statement_month }}" required>
+        <button class="button button-secondary" type="submit">Download PDF statement</button>
+      </form>
+      {% if entries %}
+        <div class="table-wrap">
+          <table class="transaction-table">
+            <thead>
+              <tr><th>Date / time</th><th>Type</th><th>Counterparty</th><th>Reference</th><th>Status</th><th class="align-right">Amount</th></tr>
+            </thead>
+            <tbody id="transaction-rows">
+              {% for entry in entries %}
+                <tr data-direction="{{ entry.direction }}"
+                    data-search="{{ entry.counterparty|lower }} {{ entry.reference|lower }}">
+                  <td class="date-cell">{{ entry.created_at|datetime }}</td>
+                  <td><span class="type-badge {{ 'type-sent' if entry.direction == 'debit' else 'type-received' }}">{{ 'Sent' if entry.direction == 'debit' else 'Received' }}</span></td>
+                  <td class="counterparty">{{ entry.counterparty }}</td>
+                  <td class="reference-cell">{{ entry.reference or "—" }}</td>
+                  <td><span class="status-complete"><i></i> Completed</span></td>
+                  <td class="align-right amount-{{ entry.direction }}">{{ "+" if entry.direction == "credit" else "−" }}${{ "%.2f"|format(entry.amount_cents / 100) }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <p id="transaction-empty-filter" class="filtered-empty" hidden>No transactions match these filters.</p>
+      {% else %}
+        <div class="empty-state">
+          <span class="empty-icon">↗</span>
+          <strong>No transfers yet</strong>
+          <p>Completed transfers will appear here.</p>
+        </div>
+      {% endif %}
+      <div class="ledger-view-link">
+        <a class="button button-secondary" href="{{ url_for('transaction_history') }}">
+          View all transaction history <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+  </div>
+  <div id="transfer-confirm-modal" class="modal-backdrop transfer-confirm-backdrop"
+       role="dialog" aria-modal="true" aria-labelledby="transfer-confirm-title" hidden>
+    <section class="modal transfer-confirm-modal">
+      <button class="transfer-modal-close" type="button" data-close-modal="#transfer-confirm-modal"
+              aria-label="Close transfer review">×</button>
+      <div class="transfer-confirm-icon" data-transfer-icon aria-hidden="true">
+        <span class="transfer-confirm-check">✓</span>
+      </div>
+      <span class="transfer-confirm-kicker">Transfer review</span>
+      <h2 id="transfer-confirm-title">Confirm this transfer</h2>
+      <p class="transfer-confirm-intro" data-transfer-status role="status" aria-live="polite">
+        Review the details carefully before sending.
+      </p>
+      <dl class="transfer-summary">
+        <div><dt>Recipient identifier</dt><dd data-confirm-recipient>—</dd></div>
+        <div><dt>Amount</dt><dd data-confirm-amount>—</dd></div>
+        <div><dt>Reference</dt><dd data-confirm-reference>—</dd></div>
+      </dl>
+      <div class="field transfer-pin-field">
+        <label for="transfer-payment-pin">Payment Password</label>
+        <input id="transfer-payment-pin" type="password" inputmode="numeric"
+               pattern="[0-9]{6}" minlength="6" maxlength="6"
+               autocomplete="current-password" aria-describedby="transfer-pin-help" required>
+        <small id="transfer-pin-help">Enter your six-digit Payment Password to authorize this transfer.</small>
+      </div>
+      {% if user.mfa_enabled %}
+        <div class="field transfer-pin-field">
+          <label for="transfer-totp-code">Authenticator code <small>(required for transfers of $1,000 or more)</small></label>
+          <input id="transfer-totp-code" type="text" inputmode="text"
+                 pattern="(?:[0-9]{6}|[A-Fa-f0-9]{16})" minlength="6" maxlength="16"
+                 autocomplete="off" aria-describedby="transfer-totp-help">
+          <small id="transfer-totp-help">A recovery code can be used instead of a current TOTP.</small>
+        </div>
+      {% endif %}
+      <p class="transfer-confirm-note">
+        The recipient is checked by the server. Your PIN is never sent to the recipient.
+        FinBest records this activity internally and does not process real payments.
+      </p>
+      <div class="transfer-confirm-actions">
+        <button class="button button-secondary" type="button"
+                data-close-modal="#transfer-confirm-modal">Go back</button>
+        <button class="button transfer-confirm-submit" id="confirm-transfer" type="button">
+          Confirm transfer <span aria-hidden="true">→</span>
+        </button>
+        <button class="button transfer-confirm-done" type="button"
+                data-close-modal="#transfer-confirm-modal" hidden>Done</button>
+      </div>
+    </section>
+  </div>
+  <div id="receipt-modal" class="modal-backdrop receipt-backdrop" role="dialog" aria-modal="true"
+       aria-labelledby="receipt-title" hidden>
+    <section class="receipt-slip" id="receipt-print-area">
+      <button class="receipt-close no-print" type="button" data-close-modal="#receipt-modal"
+              aria-label="Close receipt">×</button>
+      <div class="receipt-brand-row">
+        <span class="receipt-brand-mark" aria-hidden="true">FB</span>
+        <span>FinBest <small>PAYMENT RECEIPT</small></span>
+      </div>
+      <div class="receipt-success-banner"><span aria-hidden="true">✓</span> SUCCESSFUL</div>
+      <h2 id="receipt-title">Transfer receipt</h2>
+      <p class="receipt-date" data-receipt-date></p>
+      <dl class="receipt-details">
+        <div><dt>Transaction ID</dt><dd data-receipt-id></dd></div>
+        <div><dt>Sender</dt><dd><span data-receipt-sender></span><small data-receipt-sender-account></small></dd></div>
+        <div><dt>Recipient</dt><dd><span data-receipt-recipient></span><small data-receipt-recipient-account></small></dd></div>
+        <div class="receipt-total"><dt>Transfer amount</dt><dd data-receipt-amount></dd></div>
+        <div><dt>Fee</dt><dd data-receipt-fee></dd></div>
+        <div><dt>Reference</dt><dd data-receipt-reference></dd></div>
+      </dl>
+      <div class="receipt-qr">
+        <img data-receipt-qr alt="QR code to verify this FinBest transaction record">
+        <span>Scan to verify receipt</span>
+      </div>
+      <p class="receipt-disclaimer">This receipt records activity within FinBest only. It is not proof of a payment through a financial institution.</p>
+      <div class="receipt-actions no-print">
+        <button class="button button-secondary" type="button" data-close-modal="#receipt-modal"
+                data-receipt-back>Go back</button>
+        <button class="button" type="button" data-download-receipt>Download receipt</button>
+      </div>
+    </section>
+  </div>
+{% endblock %}

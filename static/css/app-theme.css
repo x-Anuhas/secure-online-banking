@@ -1,0 +1,1102 @@
+body:not(.landing-page) {
+  --app-purple: #6527e8;
+  --app-purple-dark: #5120c4;
+  --app-lime: #a9e83d;
+  --text-primary: #222233;
+  --text-secondary: #625f70;
+  --app-paper: #fff;
+  --app-canvas: #f5f4f8;
+  --app-border: #e8e5ee;
+  --app-ink: var(--text-primary);
+  --app-muted: var(--text-secondary);
+  background:
+    radial-gradient(ellipse at 92% 0%, rgb(169 232 61 / 8%), transparent 28rem),
+    radial-gradient(ellipse at 5% 12%, rgb(101 39 232 / 6%), transparent 34rem),
+    var(--app-canvas);
+  color: var(--app-ink);
+}
+
+body:not(.landing-page) > main.container {
+  width: 100%;
+  max-width: none;
+  min-height: calc(100vh - 145px);
+  margin: 0;
+  padding: 44px max(20px, calc((100vw - 1180px) / 2)) 64px;
+}
+
+body:not(.landing-page) .site-header {
+  border-bottom: 1px solid rgb(35 31 52 / 7%);
+  background: rgb(255 255 255 / 92%);
+  box-shadow: 0 8px 28px rgb(35 31 52 / 5%);
+  color: var(--app-ink);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+body:not(.landing-page) .brand {
+  color: var(--app-ink);
+}
+
+body:not(.landing-page) .brand b,
+body:not(.landing-page) .nav-links a:hover,
+body:not(.landing-page) .nav-links a.active,
+body:not(.landing-page) .footer-brand span {
+  color: var(--app-purple);
+}
+
+body:not(.landing-page) .brand-mark rect {
+  fill: var(--app-purple);
+}
+
+body:not(.landing-page) .brand-mark path:first-of-type {
+  stroke: var(--app-lime);
+}
+
+body:not(.landing-page) .nav-links a {
+  color: #555365;
+}
+
+body:not(.landing-page) .nav-links a::after {
+  background: linear-gradient(90deg, var(--app-purple), var(--app-lime));
+}
+
+body:not(.landing-page) .user-chip,
+body:not(.landing-page) .theme-toggle {
+  border-color: var(--app-border);
+  background: #fff;
+  color: #49465a;
+}
+
+body:not(.landing-page) .theme-toggle:hover,
+body:not(.landing-page) .button-secondary,
+body:not(.landing-page) .button.secondary {
+  border-color: #ded3f6;
+  background: #faf8ff;
+  color: var(--app-purple-dark);
+}
+
+body:not(.landing-page) .button-secondary:hover,
+body:not(.landing-page) .button.secondary:hover {
+  border-color: #c9b6f1;
+  background: #f2ecff;
+  color: #4616ad;
+}
+
+body:not(.landing-page) .header-button:not(.button-secondary),
+body:not(.landing-page) .button:not(.button-secondary):not(.button-outline) {
+  border-color: transparent;
+  background: var(--app-purple);
+  box-shadow: 0 8px 18px rgb(101 39 232 / 18%);
+  color: #fff;
+}
+
+body:not(.landing-page) .header-button:not(.button-secondary):hover,
+body:not(.landing-page) .button:not(.button-secondary):not(.button-outline):hover {
+  background: var(--app-purple-dark);
+  box-shadow: 0 11px 24px rgb(101 39 232 / 23%);
+}
+
+body:not(.landing-page) .button-outline {
+  border-color: #ded3f6;
+  color: var(--app-purple-dark);
+}
+
+body:not(.landing-page) .menu-toggle span {
+  background: var(--app-ink);
+}
+
+body:not(.landing-page) .app-shell,
+body:not(.landing-page) .auth-shell,
+body:not(.landing-page) > main.container {
+  background:
+    radial-gradient(ellipse at 100% 0%, rgb(169 232 61 / 7%), transparent 26rem),
+    radial-gradient(ellipse at 0% 18%, rgb(101 39 232 / 5%), transparent 32rem),
+    var(--app-canvas);
+  color: var(--app-ink);
+}
+
+body:not(.landing-page) .page-head .eyebrow,
+body:not(.landing-page) .auth-heading .eyebrow,
+body:not(.landing-page) .profile-overview-copy .eyebrow {
+  color: var(--app-purple);
+}
+
+body:not(.landing-page) .page-head h1,
+body:not(.landing-page) .auth-heading h2,
+body:not(.landing-page) .profile-overview-copy h2,
+body:not(.landing-page) .card-heading h2,
+body:not(.landing-page) .profile-panel-heading h2 {
+  color: var(--app-ink);
+}
+
+body:not(.landing-page) .page-sub,
+body:not(.landing-page) .card-heading p,
+body:not(.landing-page) .profile-panel-heading p,
+body:not(.landing-page) .profile-overview-copy p {
+  color: var(--app-muted);
+}
+
+body:not(.landing-page) .card,
+body:not(.landing-page) .sum-card,
+body:not(.landing-page) .security-metric,
+body:not(.landing-page) .profile-overview,
+body:not(.landing-page) .profile-panel,
+body:not(.landing-page) .auth-main,
+body:not(.landing-page) .receipt-verify-card,
+body:not(.landing-page) .security-panel,
+body:not(.landing-page) .controls-panel,
+body:not(.landing-page) .history-card,
+body:not(.landing-page) .transfer-card,
+body:not(.landing-page) .pulse-card {
+  border-color: var(--app-border);
+  background-color: var(--app-paper);
+  box-shadow: 0 14px 36px rgb(39 32 57 / 6%);
+  color: var(--app-ink);
+}
+
+body:not(.landing-page) .sum-card.balance {
+  border-color: rgb(101 39 232 / 28%);
+  background:
+    radial-gradient(circle at 92% 12%, rgb(169 232 61 / 29%), transparent 30%),
+    linear-gradient(135deg, #5922d2 0%, #7e3ae7 58%, #a055df 100%);
+  color: #fff;
+}
+
+body:not(.landing-page) .sum-card.balance .sum-k,
+body:not(.landing-page) .sum-card.balance .sum-v,
+body:not(.landing-page) .sum-card.balance .sum-hint {
+  color: #fff;
+}
+
+body:not(.landing-page) .sum-card.balance .sum-hint i {
+  background: var(--app-lime);
+}
+
+body:not(.landing-page) .sum-card:not(.balance) .sum-k,
+body:not(.landing-page) .sum-hint,
+body:not(.landing-page) .profile-details dt,
+body:not(.landing-page) .profile-security-note,
+body:not(.landing-page) .index-caption {
+  color: var(--app-muted);
+}
+
+body:not(.landing-page) .sum-card:not(.balance) .sum-v,
+body:not(.landing-page) .sum-card:not(.balance) .status-label,
+body:not(.landing-page) .profile-details dd {
+  color: var(--app-ink);
+}
+
+body:not(.landing-page) .copy-button,
+body:not(.landing-page) .pulse-link,
+body:not(.landing-page) .ledger-view-link a {
+  color: var(--app-purple);
+}
+
+body:not(.landing-page) .transfer-card,
+body:not(.landing-page) .pulse-card,
+body:not(.landing-page) .history-card,
+body:not(.landing-page) .security-panel,
+body:not(.landing-page) .controls-panel {
+  border-radius: 18px;
+}
+
+body:not(.landing-page) .transfer-card::before,
+body:not(.landing-page) .pulse-card::before {
+  background: linear-gradient(90deg, transparent, var(--app-purple) 32%, var(--app-lime) 70%, transparent);
+}
+
+body:not(.landing-page) .transfer-card .card-icon,
+body:not(.landing-page) .card-icon {
+  border-color: #e6def5;
+  background: linear-gradient(145deg, #faf7ff, #f1ebfc);
+  box-shadow: inset 0 1px #fff, 0 5px 14px rgb(101 39 232 / 7%);
+  color: var(--app-purple);
+}
+
+body:not(.landing-page) .pulse-card .card-icon,
+body:not(.landing-page) .pulse-status {
+  border-color: #e5edd9;
+  background: linear-gradient(145deg, #fbfdf7, #f3f8e9);
+}
+
+body:not(.landing-page) .field label,
+body:not(.landing-page) .statement-download-form label {
+  color: #403d50;
+}
+
+body:not(.landing-page) .field label > span {
+  color: var(--app-purple);
+}
+
+body:not(.landing-page) .field input,
+body:not(.landing-page) .field textarea,
+body:not(.landing-page) .field select,
+body:not(.landing-page) .search-box,
+body:not(.landing-page) .history-tools select,
+body:not(.landing-page) .statement-download-form input {
+  border-color: #e2deea;
+  background: #fdfcff;
+  color: var(--app-ink);
+}
+
+body:not(.landing-page) .field input:focus,
+body:not(.landing-page) .field textarea:focus,
+body:not(.landing-page) .field select:focus,
+body:not(.landing-page) .statement-download-form input:focus {
+  border-color: #a98ae7;
+  box-shadow: 0 0 0 4px rgb(101 39 232 / 10%);
+  outline: 0;
+}
+
+body:not(.landing-page) .field input::placeholder,
+body:not(.landing-page) .field textarea::placeholder,
+body:not(.landing-page) .search-box input::placeholder {
+  color: #9894a4;
+}
+
+body:not(.landing-page) .input-wrap {
+  border-color: #e2deea;
+  background: #fdfcff;
+}
+
+body:not(.landing-page) .transfer-card .field input,
+body:not(.landing-page) .transfer-card .field textarea,
+body:not(.landing-page) .transfer-card .input-wrap {
+  border-color: #e2deea;
+  background: #fdfcff;
+}
+
+body:not(.landing-page) .transfer-card .field input:focus,
+body:not(.landing-page) .transfer-card .field textarea:focus,
+body:not(.landing-page) .transfer-card .input-wrap:focus-within {
+  border-color: #a98ae7;
+  box-shadow: 0 0 0 4px rgb(101 39 232 / 10%);
+}
+
+body:not(.landing-page) .transfer-card .field input:focus {
+  background: transparent;
+}
+
+body:not(.landing-page) .transfer-footnote,
+body:not(.landing-page) .security-disclaimer,
+body:not(.landing-page) .demo-disclaimer {
+  border-color: #e7e1f0;
+  background: #faf8fd;
+  color: #676274;
+}
+
+body:not(.landing-page) .transaction-table th,
+body:not(.landing-page) table thead th {
+  background: #f5f1fb;
+  color: #504365;
+}
+
+body:not(.landing-page) .transaction-table td,
+body:not(.landing-page) table tbody td {
+  border-color: #eeeaf3;
+  color: #393647;
+}
+
+body:not(.landing-page) .transaction-table tbody tr:hover,
+body:not(.landing-page) table tbody tr:hover {
+  background: #fbf9fe;
+}
+
+body:not(.landing-page) .type-sent {
+  background: #f1ebfd;
+  color: #632be0;
+}
+
+body:not(.landing-page) .type-received,
+body:not(.landing-page) .status-complete {
+  color: #43851e;
+}
+
+body:not(.landing-page) .status-complete i {
+  background: var(--app-lime);
+}
+
+body:not(.landing-page) .amount-credit {
+  color: #43851e;
+}
+
+body:not(.landing-page) .amount-debit {
+  color: #5f35b4;
+}
+
+body:not(.landing-page) .profile-details,
+body:not(.landing-page) .profile-details > div,
+body:not(.landing-page) .ledger-pagination {
+  border-color: var(--app-border);
+}
+
+body:not(.landing-page) .security-graph-frame {
+  border-color: #e8e2f1;
+  background:
+    linear-gradient(rgb(101 39 232 / 4%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(101 39 232 / 4%) 1px, transparent 1px),
+    radial-gradient(ellipse at center, rgb(169 232 61 / 10%), transparent 68%),
+    #fcfbfe;
+}
+
+body:not(.landing-page) .auth-shell {
+  padding-block: 42px;
+}
+
+body:not(.landing-page) .auth-aside {
+  background:
+    radial-gradient(circle at 84% 14%, rgb(169 232 61 / 28%), transparent 27%),
+    linear-gradient(145deg, #4f20c0 0%, #702ee0 55%, #8b49df 100%);
+}
+
+body:not(.landing-page) .auth-aside::before,
+body:not(.landing-page) .auth-aside::after {
+  border-color: rgb(255 255 255 / 18%);
+}
+
+body:not(.landing-page) .auth-eyebrow,
+body:not(.landing-page) .auth-aside .eyebrow {
+  color: #d6f7a0;
+}
+
+body:not(.landing-page) .auth-aside-content h1 span,
+body:not(.landing-page) .auth-mini-brand span {
+  color: #d6f7a0;
+}
+
+html[data-theme="light"] body:not(.landing-page) .auth-aside-content h1 span,
+html[data-theme="dark"] body:not(.landing-page) .auth-aside-content h1 span {
+  background: none;
+  -webkit-text-fill-color: #d6f7a0;
+}
+
+body:not(.landing-page) .auth-feature-icon {
+  border-color: rgb(214 247 160 / 30%);
+  background: rgb(214 247 160 / 12%);
+  color: #e1ffb7;
+}
+
+body:not(.landing-page) .auth-form-wrap {
+  background: var(--app-paper);
+}
+
+body:not(.landing-page) .auth-switch {
+  background: #f5f2f9;
+}
+
+body:not(.landing-page) .auth-switch a.selected {
+  background: #fff;
+  box-shadow: 0 3px 12px rgb(45 37 62 / 10%);
+  color: var(--app-purple);
+}
+
+body:not(.landing-page) .auth-feature-icon {
+  border-color: rgb(255 255 255 / 24%);
+  background: rgb(255 255 255 / 12%);
+  color: #d5f69b;
+}
+
+body:not(.landing-page) .auth-switch-prompt a,
+body:not(.landing-page) .auth-terms a {
+  color: var(--app-purple);
+}
+
+body:not(.landing-page) .receipt-success-mark {
+  background: #f0f8df;
+  color: #548b20;
+}
+
+body:not(.landing-page) .site-footer {
+  border-top: 1px solid var(--app-border);
+  background: #fff;
+  color: var(--app-ink);
+}
+
+body:not(.landing-page) .site-footer p,
+body:not(.landing-page) .footer-note,
+body:not(.landing-page) .footer-bottom,
+body:not(.landing-page) .footer-links a {
+  color: #777384;
+}
+
+body:not(.landing-page) .footer-links a:hover {
+  color: var(--app-purple);
+}
+
+html[data-theme="dark"] body:not(.landing-page) {
+  --text-primary: #f0edf7;
+  --text-secondary: #c0b9cc;
+  --app-paper: #211f2d;
+  --app-canvas: #15131e;
+  --app-border: #373344;
+  --app-ink: var(--text-primary);
+  --app-muted: var(--text-secondary);
+  background:
+    radial-gradient(ellipse at 92% 0%, rgb(169 232 61 / 7%), transparent 28rem),
+    radial-gradient(ellipse at 5% 12%, rgb(122 76 220 / 13%), transparent 34rem),
+    var(--app-canvas);
+  color: var(--app-ink);
+}
+
+html[data-theme="dark"] body:not(.landing-page) .site-header,
+html[data-theme="dark"] body:not(.landing-page) .site-footer {
+  border-color: #373344;
+  background: rgb(30 28 41 / 95%);
+  color: var(--app-ink);
+}
+
+html[data-theme="dark"] body:not(.landing-page) .brand,
+html[data-theme="dark"] body:not(.landing-page) .nav-links a,
+html[data-theme="dark"] body:not(.landing-page) .user-chip {
+  color: #f0edf7;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .theme-toggle,
+html[data-theme="dark"] body:not(.landing-page) .user-chip,
+html[data-theme="dark"] body:not(.landing-page) .button-secondary,
+html[data-theme="dark"] body:not(.landing-page) .button.secondary {
+  border-color: #453b5d;
+  background: #292536;
+  color: #d5c7f3;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .button-secondary:hover,
+html[data-theme="dark"] body:not(.landing-page) .button.secondary:hover {
+  border-color: #7255a9;
+  background: #332b45;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .app-shell,
+html[data-theme="dark"] body:not(.landing-page) .auth-shell,
+html[data-theme="dark"] body:not(.landing-page) > main.container {
+  background:
+    radial-gradient(ellipse at 100% 0%, rgb(169 232 61 / 6%), transparent 26rem),
+    radial-gradient(ellipse at 0% 18%, rgb(122 76 220 / 9%), transparent 32rem),
+    var(--app-canvas);
+  color: var(--app-ink);
+}
+
+html[data-theme="dark"] body:not(.landing-page) .card,
+html[data-theme="dark"] body:not(.landing-page) .sum-card:not(.balance),
+html[data-theme="dark"] body:not(.landing-page) .security-metric,
+html[data-theme="dark"] body:not(.landing-page) .profile-overview,
+html[data-theme="dark"] body:not(.landing-page) .profile-panel,
+html[data-theme="dark"] body:not(.landing-page) .auth-main,
+html[data-theme="dark"] body:not(.landing-page) .receipt-verify-card,
+html[data-theme="dark"] body:not(.landing-page) .security-panel,
+html[data-theme="dark"] body:not(.landing-page) .controls-panel,
+html[data-theme="dark"] body:not(.landing-page) .history-card,
+html[data-theme="dark"] body:not(.landing-page) .transfer-card,
+html[data-theme="dark"] body:not(.landing-page) .pulse-card {
+  border-color: var(--app-border);
+  background-color: var(--app-paper);
+  color: var(--app-ink);
+}
+
+html[data-theme="dark"] body:not(.landing-page) .sum-card.balance {
+  background:
+    radial-gradient(circle at 92% 12%, rgb(169 232 61 / 25%), transparent 30%),
+    linear-gradient(135deg, #5120c4 0%, #6e34c8 60%, #8042ca 100%);
+}
+
+html[data-theme="dark"] body:not(.landing-page) .page-head h1,
+html[data-theme="dark"] body:not(.landing-page) .auth-heading h2,
+html[data-theme="dark"] body:not(.landing-page) .profile-overview-copy h2,
+html[data-theme="dark"] body:not(.landing-page) .card-heading h2,
+html[data-theme="dark"] body:not(.landing-page) .profile-panel-heading h2,
+html[data-theme="dark"] body:not(.landing-page) .sum-card:not(.balance) .sum-v,
+html[data-theme="dark"] body:not(.landing-page) .sum-card:not(.balance) .status-label,
+html[data-theme="dark"] body:not(.landing-page) .profile-details dd {
+  color: var(--app-ink);
+}
+
+html[data-theme="dark"] body:not(.landing-page) .field label,
+html[data-theme="dark"] body:not(.landing-page) .statement-download-form label {
+  color: #ddd7e8;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .field input,
+html[data-theme="dark"] body:not(.landing-page) .field textarea,
+html[data-theme="dark"] body:not(.landing-page) .field select,
+html[data-theme="dark"] body:not(.landing-page) .search-box,
+html[data-theme="dark"] body:not(.landing-page) .history-tools select,
+html[data-theme="dark"] body:not(.landing-page) .statement-download-form input,
+html[data-theme="dark"] body:not(.landing-page) .input-wrap,
+html[data-theme="dark"] body:not(.landing-page) .transfer-card .field input,
+html[data-theme="dark"] body:not(.landing-page) .transfer-card .field textarea,
+html[data-theme="dark"] body:not(.landing-page) .transfer-card .input-wrap {
+  border-color: #494357;
+  background: #191722;
+  color: #f0edf7;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transfer-card .field input:focus,
+html[data-theme="dark"] body:not(.landing-page) .transfer-card .field textarea:focus {
+  background: transparent;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transfer-footnote,
+html[data-theme="dark"] body:not(.landing-page) .security-disclaimer,
+html[data-theme="dark"] body:not(.landing-page) .demo-disclaimer,
+html[data-theme="dark"] body:not(.landing-page) .pulse-status {
+  border-color: #3c374b;
+  background: #292536;
+  color: #c0b8cc;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transaction-table th,
+html[data-theme="dark"] body:not(.landing-page) table thead th {
+  background: #2a2638;
+  color: #ded5ee;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transaction-table td,
+html[data-theme="dark"] body:not(.landing-page) table tbody td {
+  border-color: #393446;
+  color: #e2ddeb;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transaction-table tbody tr:hover,
+html[data-theme="dark"] body:not(.landing-page) table tbody tr:hover {
+  background: #292536;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .security-graph-frame {
+  border-color: #40394f;
+  background:
+    linear-gradient(rgb(183 157 230 / 6%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(183 157 230 / 6%) 1px, transparent 1px),
+    radial-gradient(ellipse at center, rgb(169 232 61 / 8%), transparent 68%),
+    #191722;
+}
+
+body:not(.landing-page) .security-metric-icon.metric-blue,
+body:not(.landing-page) .security-metric-icon.metric-purple {
+  background: #f1ebfd;
+  color: var(--app-purple);
+}
+
+body:not(.landing-page) .security-metric-icon.metric-green {
+  background: #f0f8df;
+  color: #548b20;
+}
+
+body:not(.landing-page) .security-metric-icon.metric-amber {
+  background: #fff5dc;
+  color: #9b6a11;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .site-footer p,
+html[data-theme="dark"] body:not(.landing-page) .footer-note,
+html[data-theme="dark"] body:not(.landing-page) .footer-bottom,
+html[data-theme="dark"] body:not(.landing-page) .footer-links a {
+  color: #b0aabc;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .auth-switch {
+  background: #191722;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .auth-switch a.selected {
+  background: #302a3e;
+  color: #c5a9ff;
+}
+
+html[data-theme="light"] body:not(.landing-page) {
+  background:
+    radial-gradient(ellipse at 92% 0%, rgb(169 232 61 / 8%), transparent 28rem),
+    radial-gradient(ellipse at 5% 12%, rgb(101 39 232 / 6%), transparent 34rem),
+    #f5f4f8;
+  color: #222233;
+}
+
+html[data-theme="light"] body:not(.landing-page) .site-header {
+  border-color: rgb(35 31 52 / 7%);
+  background: rgb(255 255 255 / 92%);
+  color: #222233;
+}
+
+html[data-theme="light"] body:not(.landing-page) .site-header .nav-links a,
+html[data-theme="light"] body:not(.landing-page) .site-header .user-chip,
+html[data-theme="light"] body:not(.landing-page) .site-header .brand {
+  color: #555365;
+}
+
+html[data-theme="light"] body:not(.landing-page) .site-header .brand b,
+html[data-theme="light"] body:not(.landing-page) .site-header .nav-links a.active,
+html[data-theme="light"] body:not(.landing-page) .site-header .nav-links a:hover {
+  color: #6527e8;
+}
+
+html[data-theme="light"] body:not(.landing-page) .app-shell,
+html[data-theme="light"] body:not(.landing-page) .auth-shell,
+html[data-theme="light"] body:not(.landing-page) > main.container {
+  background:
+    radial-gradient(ellipse at 100% 0%, rgb(169 232 61 / 7%), transparent 26rem),
+    radial-gradient(ellipse at 0% 18%, rgb(101 39 232 / 5%), transparent 32rem),
+    #f5f4f8;
+  color: #222233;
+}
+
+html[data-theme="light"] body:not(.landing-page) .page-head h1,
+html[data-theme="light"] body:not(.landing-page) .auth-heading h2,
+html[data-theme="light"] body:not(.landing-page) .profile-overview-copy h2,
+html[data-theme="light"] body:not(.landing-page) .card-heading h2,
+html[data-theme="light"] body:not(.landing-page) .profile-panel-heading h2,
+html[data-theme="light"] body:not(.landing-page) .sum-card:not(.balance) .sum-v,
+html[data-theme="light"] body:not(.landing-page) .sum-card:not(.balance) .status-label,
+html[data-theme="light"] body:not(.landing-page) .profile-details dd {
+  color: #222233;
+}
+
+html[data-theme="light"] body:not(.landing-page) .card,
+html[data-theme="light"] body:not(.landing-page) .sum-card:not(.balance),
+html[data-theme="light"] body:not(.landing-page) .security-metric,
+html[data-theme="light"] body:not(.landing-page) .profile-overview,
+html[data-theme="light"] body:not(.landing-page) .profile-panel,
+html[data-theme="light"] body:not(.landing-page) .auth-main,
+html[data-theme="light"] body:not(.landing-page) .receipt-verify-card,
+html[data-theme="light"] body:not(.landing-page) .security-panel,
+html[data-theme="light"] body:not(.landing-page) .controls-panel,
+html[data-theme="light"] body:not(.landing-page) .history-card,
+html[data-theme="light"] body:not(.landing-page) .transfer-card,
+html[data-theme="light"] body:not(.landing-page) .pulse-card {
+  border-color: #e8e5ee;
+  background-color: #fff;
+  color: #222233;
+}
+
+html[data-theme="light"] body:not(.landing-page) .field label,
+html[data-theme="light"] body:not(.landing-page) .statement-download-form label {
+  color: #403d50;
+}
+
+html[data-theme="light"] body:not(.landing-page) .field input,
+html[data-theme="light"] body:not(.landing-page) .field textarea,
+html[data-theme="light"] body:not(.landing-page) .field select,
+html[data-theme="light"] body:not(.landing-page) .search-box,
+html[data-theme="light"] body:not(.landing-page) .history-tools select,
+html[data-theme="light"] body:not(.landing-page) .statement-download-form input,
+html[data-theme="light"] body:not(.landing-page) .input-wrap,
+html[data-theme="light"] body:not(.landing-page) .transfer-card .field input,
+html[data-theme="light"] body:not(.landing-page) .transfer-card .field textarea,
+html[data-theme="light"] body:not(.landing-page) .transfer-card .input-wrap {
+  border-color: #e2deea;
+  background: #fdfcff;
+  color: #222233;
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-card .field input:focus,
+html[data-theme="light"] body:not(.landing-page) .transfer-card .field textarea:focus {
+  background: #fff;
+}
+
+html[data-theme="light"] body:not(.landing-page) .site-footer {
+  border-color: #e8e5ee;
+  background: #fff;
+  color: #222233;
+}
+
+html[data-theme="light"] body:not(.landing-page) .site-footer p,
+html[data-theme="light"] body:not(.landing-page) .footer-note,
+html[data-theme="light"] body:not(.landing-page) .footer-bottom,
+html[data-theme="light"] body:not(.landing-page) .footer-links a {
+  color: #777384;
+}
+
+@media (max-width: 760px) {
+  body:not(.landing-page) .site-header {
+    background: rgb(255 255 255 / 96%);
+  }
+
+  html[data-theme="dark"] body:not(.landing-page) .site-header {
+    background: rgb(30 28 41 / 97%);
+  }
+}
+
+@media (max-width: 680px) {
+  body:not(.landing-page) .auth-layout {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body:not(.landing-page) .auth-aside,
+  body:not(.landing-page) .auth-main {
+    min-width: 0;
+  }
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+html[data-theme] body:not(.landing-page) .page-head h1,
+html[data-theme] body:not(.landing-page) .card-heading h2,
+html[data-theme] body:not(.landing-page) .profile-panel-heading h2,
+html[data-theme] body:not(.landing-page) .auth-heading h2,
+html[data-theme] body:not(.landing-page) .profile-overview-copy h2,
+html[data-theme] body:not(.landing-page) .receipt-verify-card h1 {
+  color: var(--text-primary);
+}
+
+html[data-theme] body:not(.landing-page) .page-sub,
+html[data-theme] body:not(.landing-page) .card-heading p,
+html[data-theme] body:not(.landing-page) .profile-panel-heading p,
+html[data-theme] body:not(.landing-page) .profile-details dt,
+html[data-theme] body:not(.landing-page) .sum-hint,
+html[data-theme] body:not(.landing-page) .auth-heading p,
+html[data-theme] body:not(.landing-page) .auth-switch-prompt,
+html[data-theme] body:not(.landing-page) .receipt-verify-card > p {
+  color: var(--text-secondary);
+}
+
+html[data-theme] body:not(.landing-page) .admin-dashboard > .page-head {
+  border-color: rgb(169 232 61 / 24%);
+  background:
+    radial-gradient(ellipse at 92% 6%, rgb(169 232 61 / 13%), transparent 34%),
+    linear-gradient(120deg, #18152a, #29203d 58%, #302348);
+  color: #fff;
+}
+
+html[data-theme] body:not(.landing-page) .admin-dashboard > .page-head h1,
+html[data-theme] body:not(.landing-page) .admin-dashboard > .page-head .page-sub {
+  color: #fff;
+}
+
+html[data-theme] body:not(.landing-page) .admin-dashboard > .page-head .eyebrow {
+  color: #c6ee83;
+}
+
+html[data-theme] body:not(.landing-page) .admin-dashboard > .page-head .membership-badge {
+  border-color: rgb(255 255 255 / 22%);
+  background: rgb(255 255 255 / 10%);
+  color: #e9f8cf;
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-backdrop {
+  background: rgb(29 25 43 / 54%);
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal {
+  border-color: #e7def8;
+  background:
+    radial-gradient(ellipse at 50% -10%, rgb(101 39 232 / 7%), transparent 55%),
+    #fff;
+  color: #242237;
+  box-shadow: 0 32px 90px rgb(35 31 61 / 24%);
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal h2 {
+  color: #242237;
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal .transfer-confirm-kicker {
+  color: #5d26cc;
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal .transfer-confirm-intro,
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal .transfer-confirm-note {
+  color: #5f5d6d;
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal .transfer-summary {
+  border-color: #ebe6f3;
+  background: #faf9fc;
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal .transfer-summary > div {
+  border-color: #e9e4ef;
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal .transfer-summary dt {
+  color: #625f70;
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal .transfer-summary dd {
+  color: #29263a;
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal .transfer-summary > div:nth-child(2) dd {
+  color: #5420c4;
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal .field label {
+  color: #393647;
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal .field input {
+  border-color: #d9d2e5;
+  background: #fff;
+  color: #242237;
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal .field input:focus {
+  border-color: #936be0;
+  box-shadow: 0 0 0 4px rgb(101 39 232 / 12%);
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal .field small {
+  color: #625f70;
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal .transfer-modal-close {
+  border-color: #e8e3ef;
+  background: #faf9fc;
+  color: #5d596b;
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal .transfer-modal-close:hover {
+  border-color: #c9b5ef;
+  color: #5120c4;
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal .transfer-confirm-submit {
+  border-color: transparent;
+  background: linear-gradient(135deg, #7134e7, #5720c9);
+  color: #fff;
+}
+
+html[data-theme="light"] body:not(.landing-page) .transfer-confirm-modal .transfer-confirm-done {
+  border-color: transparent;
+  background: linear-gradient(135deg, #4e8e20, #357614);
+  color: #fff;
+}
+
+@media (max-width: 1280px) {
+  html[data-theme="dark"] body:not(.landing-page) .nav-links {
+    border-color: #453b5d;
+    background: #211f2d;
+  }
+
+  html[data-theme="dark"] body:not(.landing-page) .nav-links a {
+    color: #f0edf7;
+  }
+
+  html[data-theme="dark"] body:not(.landing-page) .nav-links a:hover,
+  html[data-theme="dark"] body:not(.landing-page) .nav-links a.active {
+    background: rgb(169 232 61 / 10%);
+    color: #d6f68f;
+  }
+
+  html[data-theme="dark"] body:not(.landing-page) .menu-toggle {
+    border-color: #514765;
+  }
+
+  html[data-theme="dark"] body:not(.landing-page) .menu-toggle span {
+    background: #f0edf7;
+  }
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-backdrop {
+  background: rgb(4 7 14 / 78%);
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal {
+  border-color: #484055;
+  background:
+    radial-gradient(ellipse at 50% -10%, rgb(101 39 232 / 18%), transparent 55%),
+    #211f2d;
+  color: #f0edf7;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal h2,
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal .transfer-summary dd {
+  color: #f0edf7;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal .transfer-confirm-kicker {
+  color: #c1a6ff;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal .transfer-confirm-intro,
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal .transfer-confirm-note,
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal .transfer-summary dt,
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal .field small {
+  color: #c0b9cc;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal .transfer-summary {
+  border-color: #413b4e;
+  background: #191722;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal .transfer-summary > div {
+  border-color: #3c3748;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal .transfer-summary > div:nth-child(2) dd {
+  color: #d5c0ff;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal .field label {
+  color: #e7e1ef;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal .field input {
+  border-color: #514a60;
+  background: #191722;
+  color: #f0edf7;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal .field input:focus {
+  border-color: #a17bea;
+  box-shadow: 0 0 0 4px rgb(155 112 232 / 18%);
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal .transfer-modal-close {
+  border-color: #494357;
+  background: #2a2638;
+  color: #d7d0e2;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal .transfer-modal-close:hover {
+  border-color: #8b6bc7;
+  color: #fff;
+}
+
+html[data-theme="dark"] body:not(.landing-page) .transfer-confirm-modal .transfer-confirm-submit {
+  border-color: transparent;
+  background: linear-gradient(135deg, #7946e8, #5727c3);
+  color: #fff;
+}
+
+html[data-theme] body:not(.landing-page) .site-footer {
+  border-top: 1px solid rgb(255 255 255 / 12%);
+  background:
+    radial-gradient(ellipse at 8% 0%, rgb(84 95 142 / 19%), transparent 34rem),
+    linear-gradient(145deg, #171b2d, #20243a 62%, #191d30);
+  color: #e8edf5;
+}
+
+html[data-theme] body:not(.landing-page) .site-footer .footer-wrap {
+  width: min(1280px, calc(100% - 48px));
+  gap: clamp(28px, 4vw, 64px);
+  padding-top: 12px;
+}
+
+html[data-theme] body:not(.landing-page) .site-footer .footer-brand {
+  color: #fff;
+  font-size: 1.35rem;
+}
+
+html[data-theme] body:not(.landing-page) .site-footer .footer-brand span {
+  color: #7bdcf7;
+}
+
+html[data-theme] body:not(.landing-page) .site-footer .footer-brand-column p {
+  color: #e0e6f0;
+  font-size: 0.9rem;
+}
+
+html[data-theme] body:not(.landing-page) .site-footer .footer-note {
+  color: #bac5d5;
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+
+html[data-theme] body:not(.landing-page) .site-footer .footer-links strong {
+  margin-bottom: 5px;
+  color: #fff;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html[data-theme] body:not(.landing-page) .site-footer .footer-links a {
+  color: #d2d9e5;
+  font-size: 0.88rem;
+}
+
+html[data-theme] body:not(.landing-page) .site-footer .footer-links a:hover {
+  color: #a9e83d;
+  text-decoration: none;
+}
+
+html[data-theme] body:not(.landing-page) .site-footer .footer-links:last-child .footer-note {
+  max-width: 270px;
+  margin-top: 7px;
+  padding: 10px 12px;
+  border: 1px solid rgb(255 255 255 / 11%);
+  border-left: 2px solid #a9e83d;
+  border-radius: 8px;
+  background: rgb(255 255 255 / 5%);
+}
+
+html[data-theme] body:not(.landing-page) .site-footer .footer-bottom {
+  width: min(1280px, calc(100% - 48px));
+  padding-block: 16px 18px;
+  border-top-color: rgb(255 255 255 / 14%);
+  color: #b9c4d4;
+  font-size: 0.76rem;
+}
+
+html[data-theme] body:not(.landing-page) .site-footer .footer-status {
+  color: #d6deea;
+}
+
+html[data-theme] body:not(.landing-page) .app-shell .account-page-head {
+  padding: 24px 26px;
+  border: 1px solid rgb(126 188 228 / 20%);
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at 5% 0%, rgb(0 194 255 / 17%), transparent 35rem),
+    linear-gradient(125deg, #111d34, #172943 68%, #1a3048);
+  box-shadow: 0 16px 38px rgb(12 25 45 / 14%);
+}
+
+html[data-theme] body:not(.landing-page) .app-shell .account-page-head .eyebrow {
+  color: #8bdcf4;
+}
+
+html[data-theme] body:not(.landing-page) .app-shell .account-page-head h1 {
+  color: #f7fbff;
+}
+
+html[data-theme] body:not(.landing-page) .app-shell .account-page-head .page-sub {
+  color: #c0ccdb;
+}
+
+.account-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.secure-session-badge {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid rgb(106 220 165 / 30%);
+  border-radius: 999px;
+  background: rgb(24 112 75 / 20%);
+  color: #a6f0c6;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.secure-session-badge svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+@media (max-width: 620px) {
+  html[data-theme] body:not(.landing-page) .app-shell .account-page-head {
+    padding: 20px;
+  }
+
+  .account-page-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}

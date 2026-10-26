@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% block title %}{{ "Create your account" if auth_mode == "register" else "Sign in" }} | FinBest{% endblock %}
+{% block main_class %}auth-shell{% endblock %}
+{% block content %}
+  <div class="auth-layout">
+    <aside class="auth-aside">
+      <a class="auth-back-link" href="{{ url_for('index') }}"><span aria-hidden="true">←</span> Back to home</a>
+      <div class="auth-aside-content">
+        <span class="eyebrow auth-eyebrow">FinBest secure customer access</span>
+        {% if auth_mode == "register" %}
+          <h1>Make room for<br><span>better banking.</span></h1>
+          <p>Create an account to explore sign-in, transfers, and account monitoring. No real account or funds are involved.</p>
+        {% else %}
+          <h1>Your money,<br><span>your peace of mind.</span></h1>
+          <p>Sign in to your FinBest account and pick up where you left off.</p>
+        {% endif %}
+        <div class="auth-feature-list">
+          <div><span class="auth-feature-icon">◇</span><span><strong>Security built in</strong><small>Layered safeguards on every session</small></span></div>
+          <div><span class="auth-feature-icon">↗</span><span><strong>Simple transfers</strong><small>Clear account activity records</small></span></div>
+          <div><span class="auth-feature-icon">⌁</span><span><strong>Risk-aware by design</strong><small>Extra verification for unusual activity</small></span></div>
+        </div>
+      </div>
+      <div class="auth-aside-footer">
+        <span class="auth-mini-brand">Fin<span>Best</span></span>
+        <span>Secure banking, thoughtfully designed.</span>
+      </div>
+      <div class="auth-orb auth-orb-one"></div>
+      <div class="auth-orb auth-orb-two"></div>
+    </aside>
+
+    <section class="auth-main">
+      <div class="auth-form-wrap">
+        <div class="auth-switch" aria-label="Choose account access page">
+          <a href="{{ url_for('login_page') }}"
+             class="{{ 'selected' if auth_mode == 'login' else '' }}"
+             {% if auth_mode == 'login' %}aria-current="page"{% endif %}>Sign in</a>
+          <a href="{{ url_for('register_page') }}"
+             class="{{ 'selected' if auth_mode == 'register' else '' }}"
+             {% if auth_mode == 'register' %}aria-current="page"{% endif %}>Create account</a>
+        </div>
+
+        <header class="auth-heading">
+          <span class="eyebrow">{{ "New to FinBest?" if auth_mode == "register" else "Customer access" }}</span>
+          <h2>{{ "Create your account" if auth_mode == "register" else "Welcome back" }}</h2>
+          <p>
+            {% if auth_mode == "register" %}
+              Create an account. Balances are illustrative and no real funds are held.
+            {% else %}
+              Enter your details to access your account.
+            {% endif %}
+          </p>
+        </header>
+
+        <div id="auth-message" class="form-message" aria-live="polite"></div>
+
+        {% if auth_mode == "register" %}
+          <form id="auth-form" class="auth-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <div class="form-grid">
+              <div class="field wide">
+                <label for="full-name">Full name</label>
+                <input id="full-name" name="full_name" autocomplete="name"
+                       placeholder="e.g. Alex Morgan" minlength="2" maxlength="100" required>
+              </div>
+              <div class="field">
+                <label for="national-id">National ID / passport number</label>
+                <input id="national-id" name="national_id" inputmode="numeric"
+                       pattern="[0-9]{6,20}" minlength="6" maxlength="20"
+                       placeholder="6–20 digits" required>
+              </div>
+              <div class="field">
+                <label for="username">Username</label>
+                <input id="username" name="username" pattern="[A-Za-z][A-Za-z0-9_.\-]{2,29}"
+                       minlength="3" maxlength="30" autocomplete="username"
+                       placeholder="Choose a username" required>
+              </div>
+              <div class="field">
+                <label for="email">Email address</label>
+                <input id="email" name="email" type="email" maxlength="254"
+                       autocomplete="email" placeholder="you@example.com" required>
+              </div>
+              <div class="field">
+                <label for="phone">Phone number</label>
+                <input id="phone" name="phone" inputmode="numeric"
+                       pattern="[0-9]{7,15}" minlength="7" maxlength="15"
+                       autocomplete="tel" placeholder="7–15 digits" required>
+              </div>
+              <div class="field">
+                <label for="register-password">Password</label>
+                <input id="register-password" name="password" type="password"
+                       minlength="8" maxlength="128" autocomplete="new-password" required
+                       pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,128}"
+                       placeholder="Create a strong password">
+              </div>
+              <p class="auth-field-help wide">Use 8+ characters with uppercase, lowercase, a number, and a symbol.</p>
+              <div class="field">
+                <label for="payment-pin">Payment Password</label>
+                <input id="payment-pin" name="payment_pin" type="password"
+                       inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6"
+                       autocomplete="new-password" placeholder="Create a six-digit PIN" required>
+              </div>
+              <div class="field">
+                <label for="payment-pin-confirm">Confirm Payment Password</label>
+                <input id="payment-pin-confirm" name="payment_pin_confirm" type="password"
+                       inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6"
+                       autocomplete="new-password" placeholder="Re-enter six-digit PIN" required>
+              </div>
+              <p class="auth-field-help wide">Create this once during registration. It will be used to authorize transfers. Do not reuse an ATM or card PIN.</p>
+            </div>
+            <button class="button full auth-submit" type="submit" name="action" value="register">
+              Create account <span aria-hidden="true">→</span>
+            </button>
+            <p class="auth-terms">FinBest is not a bank and does not hold real funds. Do not enter real identity or banking information.</p>
+          </form>
+          <p class="auth-switch-prompt">Already have an account? <a href="{{ url_for('login_page') }}">Sign in</a></p>
+        {% else %}
+          <form id="auth-form-login" class="auth-form">
+            <div class="field">
+              <label for="login-username">Email or username</label>
+              <input id="login-username" name="username" autocomplete="username"
+                     minlength="3" maxlength="254" placeholder="Enter your email or username" required>
+            </div>
+            <div class="field">
+              <div class="label-row">
+                <label for="login-password">Password</label>
+                <span class="field-note">Three consecutive wrong passwords lock access until an administrator unlocks it.</span>
+              </div>
+              <input id="login-password" name="password" type="password"
+                     autocomplete="current-password" placeholder="Enter your password" required>
+            </div>
+            <label class="location-consent">
+              <input type="checkbox" name="share_location">
+              <span class="custom-check" aria-hidden="true">✓</span>
+              <span class="consent-copy">
+                <strong>Use optional location signals</strong>
+                <small>Only used if you allow your browser to share location.</small>
+              </span>
+            </label>
+            <button class="button full auth-submit" type="submit">
+              Sign in securely <span aria-hidden="true">→</span>
+            </button>
+            <div class="auth-secure-note"><span aria-hidden="true">◇</span> Your password is never stored in plain text.</div>
+          </form>
+          <form id="login-verification-form" class="auth-form" hidden>
+            <header class="auth-heading">
+              <span class="eyebrow">Additional sign-in check</span>
+              <h2>Verify it’s you</h2>
+              <p id="login-step-up-reason">This sign-in needs an additional check before a session can be created.</p>
+            </header>
+            <div id="login-verification-message" class="form-message" aria-live="polite"></div>
+            <div class="field">
+              <label id="login-factor-label" for="login-payment-pin">Payment Password</label>
+              <input id="login-payment-pin" name="factor_code" type="password"
+                     inputmode="numeric" pattern="(?:[0-9]{6}|[A-Fa-f0-9]{16})"
+                     minlength="6" maxlength="16" autocomplete="off"
+                     placeholder="Enter your verification code" required>
+            </div>
+            <button class="button full auth-submit" type="submit">
+              Verify and sign in <span aria-hidden="true">→</span>
+            </button>
+            <button class="button button-secondary full" id="cancel-login-verification" type="button">
+              Return to sign in
+            </button>
+            <p class="auth-field-help">This is requested only for a medium-risk sign-in. Normal low-risk sign-ins do not ask for your Payment Password.</p>
+          </form>
+          <p class="auth-switch-prompt">New to FinBest? <a href="{{ url_for('register_page') }}">Create an account</a></p>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block title %}Profile settings | FinBest{% endblock %}
+{% block main_class %}app-shell{% endblock %}
+{% block content %}
+  <div class="profile-page">
+    <header class="page-head reveal">
+      <div>
+        <span class="eyebrow">Account preferences</span>
+        <h1>Profile settings</h1>
+        <p class="page-sub">Manage your contact details, profile picture, and sign-in credentials.</p>
+      </div>
+      <a class="button button-secondary" href="{{ url_for('dashboard') }}">Back to dashboard</a>
+    </header>
+    <div id="profile-message" class="form-message" aria-live="polite"></div>
+
+    <section class="profile-overview card reveal">
+      <div class="profile-avatar-wrap">
+        {% if profile_image_url %}
+          <img class="profile-avatar" id="profile-avatar" src="{{ profile_image_url }}"
+               alt="Your profile picture">
+        {% else %}
+          <span class="profile-avatar profile-avatar-placeholder" id="profile-avatar"
+                aria-label="Profile picture placeholder">{{ user.full_name[:1]|upper }}</span>
+        {% endif %}
+      </div>
+      <div class="profile-overview-copy">
+        <span class="eyebrow">FinBest account profile</span>
+        <h2>{{ user.full_name }}</h2>
+        <p>{{ user.email }}</p>
+      </div>
+      <span class="membership-badge"><i aria-hidden="true">◇</i> Standard member</span>
+      <form class="avatar-upload" id="profile-photo-form">
+        <label class="button button-secondary" for="profile-photo">Change picture</label>
+        <input id="profile-photo" name="photo" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+        <small>PNG, JPEG, or WebP · max 2 MB</small>
+      </form>
+    </section>
+
+    <div class="profile-settings-grid">
+      <section class="card profile-panel reveal">
+        <header class="profile-panel-heading">
+          <span class="card-icon">▤</span>
+          <div><h2>Account information</h2><p>Your registered customer details.</p></div>
+        </header>
+        <dl class="profile-details">
+          <div><dt>Full name</dt><dd>{{ user.full_name }}</dd></div>
+          <div><dt>Email address</dt><dd>{{ user.email }}</dd></div>
+          <div><dt>Account number</dt><dd>{{ user.account_number }}</dd></div>
+          <div><dt>Membership</dt><dd>Standard</dd></div>
+          <div><dt>Member since</dt><dd>{{ user.created_at|month_year }}</dd></div>
+        </dl>
+        <form id="profile-phone-form" class="profile-form">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <div class="field">
+            <label for="profile-phone">Phone number</label>
+            <input id="profile-phone" name="phone" value="{{ user.phone }}"
+                   inputmode="numeric" pattern="[0-9]{7,15}" minlength="7" maxlength="15" required>
+          </div>
+          <button class="button" type="submit">Save phone number</button>
+        </form>
+      </section>
+
+      <section class="card profile-panel reveal">
+        <header class="profile-panel-heading">
+          <span class="card-icon">⌑</span>
+          <div><h2>Login password</h2><p>Confirm your current password before changing it.</p></div>
+        </header>
+        <form id="profile-password-form" class="profile-form">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <div class="field">
+            <label for="current-login-password">Current password</label>
+            <input id="current-login-password" name="current_password" type="password"
+                   autocomplete="current-password" required>
+          </div>
+          <div class="field">
+            <label for="new-login-password">New password</label>
+            <input id="new-login-password" name="new_password" type="password"
+                   minlength="8" maxlength="128" autocomplete="new-password"
+                   pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,128}" required>
+            <small>8+ characters with uppercase, lowercase, a number, and a symbol.</small>
+          </div>
+          <button class="button" type="submit">Update login password</button>
+        </form>
+      </section>
+
+      <section class="card profile-panel reveal">
+        <header class="profile-panel-heading">
+          <span class="card-icon">◇</span>
+          <div><h2>Authenticator MFA</h2><p>Use an authenticator app for sign-in and high-value transfer confirmation.</p></div>
+        </header>
+        <p id="mfa-status">{{ "Authenticator MFA is enabled." if user.mfa_enabled else "Authenticator MFA is not enabled." }}</p>
+        {% if not user.mfa_enabled %}
+          <button class="button" id="mfa-setup-button" type="button">Set up authenticator</button>
+          <div id="mfa-setup-panel" hidden>
+            <p>Scan this QR code with Google Authenticator, Authy, or another TOTP app. Keep the manual key private.</p>
+            <img id="mfa-qr-code" class="mfa-qr-code" alt="Authenticator setup QR code">
+            <p>Manual key: <code id="mfa-manual-secret"></code></p>
+            <form id="mfa-enable-form" class="profile-form">
+              <div class="field">
+                <label for="mfa-enrollment-code">Authenticator code</label>
+                <input id="mfa-enrollment-code" name="totp_code" inputmode="numeric"
+                       pattern="[0-9]{6}" minlength="6" maxlength="6" required>
+              </div>
+              <button class="button" type="submit">Verify and enable MFA</button>
+            </form>
+          </div>
+          <div id="mfa-recovery-codes" hidden>
+            <strong>Save these recovery codes now. Each code can be used once.</strong>
+            <pre></pre>
+          </div>
+        {% else %}
+          <form id="mfa-disable-form" class="profile-form">
+            <div class="field">
+              <label for="mfa-disable-password">Current login password</label>
+              <input id="mfa-disable-password" name="password" type="password"
+                     autocomplete="current-password" required>
+            </div>
+            <div class="field">
+              <label for="mfa-disable-code">Authenticator or recovery code</label>
+              <input id="mfa-disable-code" name="totp_code" autocomplete="off" required>
+            </div>
+            <button class="button button-secondary" type="submit">Disable authenticator MFA</button>
+          </form>
+        {% endif %}
+        <div id="mfa-message" class="form-message" aria-live="polite"></div>
+      </section>
+
+    </div>
+    <aside class="demo-disclaimer"><strong>FinBest is not a bank.</strong> Use fictional information. This application does not provide real financial services.</aside>
+  </div>
+{% endblock %}
